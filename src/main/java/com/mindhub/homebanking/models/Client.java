@@ -1,17 +1,25 @@
 package com.mindhub.homebanking.models;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+
+
+@Entity
 public class Client {
 
+    @Id
+    public String id;
     private String firstName;
     private String lastName;
     private String email;
 
     public Client() { }
 
-    public Client(String first, String last, String mail) {
-        firstName = first;
-        lastName = last;
-        email = mail;
+    public Client(String id, String firstName, String lastName, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -30,15 +38,18 @@ public class Client {
         this.lastName = lastName;
     }
 
+    public void email(String mail) {
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String toString() {
         return firstName + " " + lastName;
     }
+
+
 }
