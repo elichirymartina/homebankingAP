@@ -1,12 +1,14 @@
 package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
 
 @SpringBootApplication
 public class HomeBankingApplication {
@@ -17,14 +19,16 @@ public class HomeBankingApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(ClientRepository clientRepository) {
+    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository) {
         return args -> {
-            Client client1 = new Client();
-            client1.setFirstName("Morel");
-            client1.setLastName("Morel");
-            client1.setEmail("melba@mindhub.com");
-            
 
+            Client client1 = new Client("Melba", "Morel", "melba@mindhub.com");
+            clientRepository.save(client1);
+
+            Account account1 = new Account(client1, "123456789", 1000.0);
+            accountRepository.save(account1);
+
+            client1.getAccounts().add(account1);
             clientRepository.save(client1);
         };
     }
